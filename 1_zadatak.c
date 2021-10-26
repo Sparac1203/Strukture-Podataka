@@ -32,9 +32,18 @@ int main()
     printf("\nUnesite naziv datoteke koju zelite procitati:\t");
     scanf(" %s", &dat);
     br_Stud=BrStud(dat);
+    if(br_Stud<0)
+    {
+        return -1;
+    }
     printf("\nUkupan broj studenata je %d\n\n", br_Stud);
     fp=fopen(dat,"r");
     s = (student*)malloc(br_Stud*sizeof(student));
+     if (!s)
+	{
+		printf("\nALOKACIJA MEMORIJE NIJE USPJELA\n");
+		return -2;
+	}
     for(i=0; i<br_Stud; i++)    //pridjeljuje podatke svakom studentu
     {
         fscanf(fp, "%s %s %lf", s[i].ime, s[i].prezime, &s[i].bodovi);
