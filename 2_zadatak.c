@@ -63,44 +63,44 @@ int main()
         }   
         switch ((char)odabir)
         {
-        case 'A':
-            printf("\nUnesite podatke o osobi\n");
-            printf("\nIme:\t");
-            scanf(" %s", Pom_Ime);
-            printf("\nPrezime:\t");
-            scanf(" %s", Pom_Prezime);
-            printf("\nGodina rodenja:\t");        
-            scanf("%d", &pom_god_rodenja);
-            Dodaj_Na_Pocetak(p, Pom_Ime, Pom_Prezime, pom_god_rodenja);
-            break;
-        case 'B':
-            Ispisi_Listu(p);
-            printf("\n\n");
-            break;
-        case 'C':
-            printf("\nUnesite podatke o osobi\n");
-            printf("\nIme:\t");
-            scanf(" %s", Pom_Ime);
-            printf("\nPrezime:\t");
-            scanf(" %s", Pom_Prezime);
-            printf("\nGodina rodenja:\t");        
-            scanf("%d", &pom_god_rodenja);
-            Dodaj_Na_Kraj(p, Pom_Ime, Pom_Prezime, pom_god_rodenja);
-            break;
-        case 'D':
-            printf("\nUnesite prezime koje zelite pronaci:\t");    
-            scanf(" %s", Pom_Prezime);
-            x=Nadi_Po_Prezimenu(p, Pom_Prezime);
-            printf("\nIme:\t%s\nPrezime:\t%s\nGodina rodenja:\t%d", x->ime, x->prezime, x->GodinaRodenja );
-            break;
-        case 'E':
-            printf("\nUnesi prezime osobe koju zelite izbrisati:\t");
-            scanf(" %s", Pom_Prezime);
-            Obrisi_po_prezimenu(p, Pom_Prezime);
-            break;    
-        default:
-            printf("\nGreska\n");
-            break;
+            case 'A':
+                printf("\nUnesite podatke o osobi\n");
+                printf("\nIme:\t");
+                scanf(" %s", Pom_Ime);
+                printf("\nPrezime:\t");
+                scanf(" %s", Pom_Prezime);
+                printf("\nGodina rodenja:\t");        
+                scanf("%d", &pom_god_rodenja);
+                Dodaj_Na_Pocetak(p, Pom_Ime, Pom_Prezime, pom_god_rodenja);
+                break;
+            case 'B':
+                Ispisi_Listu(p);
+                printf("\n\n");
+                break;
+            case 'C':
+                printf("\nUnesite podatke o osobi\n");
+                printf("\nIme:\t");
+                scanf(" %s", Pom_Ime);
+                printf("\nPrezime:\t");
+                scanf(" %s", Pom_Prezime);
+                printf("\nGodina rodenja:\t");        
+                scanf("%d", &pom_god_rodenja);
+                Dodaj_Na_Kraj(p, Pom_Ime, Pom_Prezime, pom_god_rodenja);
+                break;
+            case 'D':
+                printf("\nUnesite prezime koje zelite pronaci:\t");    
+                scanf(" %s", Pom_Prezime);
+                x=Nadi_Po_Prezimenu(p, Pom_Prezime);
+                printf("\nIme:\t%s\nPrezime:\t%s\nGodina rodenja:\t%d", x->ime, x->prezime, x->GodinaRodenja );
+                break;
+            case 'E':
+                printf("\nUnesi prezime osobe koju zelite izbrisati:\t");
+                scanf(" %s", Pom_Prezime);
+                Obrisi_po_prezimenu(p, Pom_Prezime);
+                break;    
+            default:
+                printf("\nGreska\n");
+                break;
         }
     }
     return EXIT_SUCCESS;
@@ -126,20 +126,17 @@ int Dodaj_Na_Pocetak(Pozicija head, char *ime, char *prezime, int GodinaRodenja)
 }
 
 int Ispisi_Listu(Pozicija prvi)
-{
-    char IME[M]={"IME"}, 
-        PREZIME[M]={"PREZIME"},
-        Godina[M]={"GODINA_RODENJA"};
+{   
     if (prvi->next == NULL)
 	{
 		printf("\nU listi nema elemenata!\n");
 		return -1;
 	}     
     Pozicija pomoc = prvi;        
-    printf("%-25s %-25s %-25s\n\n",IME, PREZIME, Godina);
-    while(pomoc)
-    {
-        printf("\n%-25s %-25s %-25d", pomoc->ime, pomoc->prezime, pomoc->GodinaRodenja);
+    printf("%-25s %-25s %-25s\n\n","IME", "PREZIME", "GODINA RODENJA");
+    while(pomoc->next)
+    {        
+        printf("\n%-25s %-25s %-25d", pomoc->next->ime, pomoc->next->prezime, pomoc->next->GodinaRodenja);
         pomoc=pomoc->next;
     }
     return EXIT_SUCCESS;
@@ -167,7 +164,6 @@ int Dodaj_Na_Kraj(Pozicija head, char *ime, char *prezime, int GodinaRodenja)
 Pozicija Pronadi_Zadnju(Pozicija head)
 {
     Pozicija pomocna = head;
-
 	while (pomocna->next)
 	{
 		pomocna = pomocna->next;
@@ -201,14 +197,12 @@ int Obrisi_po_prezimenu(Pozicija head, char *prezime)
     Pozicija prosli = NULL;
 	Pozicija trenutni = NULL;
 	prosli = Nadi_Prethodni(head, prezime);
-
 	if (prosli == NULL)
 		return -1;
 
 	trenutni = prosli->next;
 	prosli->next = prosli->next->next;
 	free(trenutni);
-
 	return EXIT_SUCCESS;    
 }
 
