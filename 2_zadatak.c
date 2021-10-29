@@ -91,7 +91,14 @@ int main()
                 printf("\nUnesite prezime koje zelite pronaci:\t");    
                 scanf(" %s", Pom_Prezime);
                 x=Nadi_Po_Prezimenu(p, Pom_Prezime);
-                printf("\nIme:\t%s\nPrezime:\t%s\nGodina rodenja:\t%d", x->ime, x->prezime, x->GodinaRodenja );
+                if(x == NULL)
+                {
+                    printf("\nOsoba nije unesena u listu\n");
+                }                
+                else
+                {
+                    printf("\nIme:\t%s\nPrezime:\t%s\nGodina rodenja:\t%d", x->ime, x->prezime, x->GodinaRodenja );
+                }
                 break;
             case 'E':
                 printf("\nUnesi prezime osobe koju zelite izbrisati:\t");
@@ -198,7 +205,9 @@ int Obrisi_po_prezimenu(Pozicija head, char *prezime)
 	Pozicija trenutni = NULL;
 	prosli = Nadi_Prethodni(head, prezime);
 	if (prosli == NULL)
+    {
 		return -1;
+    }
 
 	trenutni = prosli->next;
 	prosli->next = prosli->next->next;
