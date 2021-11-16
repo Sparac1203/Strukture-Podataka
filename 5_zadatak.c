@@ -28,7 +28,12 @@ int main()
 {
     Stog head = {.element = 0, .next = NULL};
     Pozicija p = &head;
-    Citanje_Iz_Datoteke(p);
+    int a=0;
+    a=Citanje_Iz_Datoteke(p);
+    if(a=EXIT_FAILURE)
+    {
+        return 0;
+    }
     printf("\nRezultat matematickih operacija koristenjem postfiksa je:\t%.4f\n\n", p->next->element);
 
     return EXIT_SUCCESS;
