@@ -339,7 +339,7 @@ int Upisi_U_File(PozicijaRed head, int regulator)
 PozicijaRed RED_Stvori_Novi_Element(int broj)
 {
     PozicijaRed NoviElement = NULL;
-    NoviElement = (PozicijaRed)malloc(sizeof(stablo));
+    NoviElement = (PozicijaRed)malloc(sizeof(Red));
     if (!NoviElement)
     {
         printf("\nNEUSPJESNA ALOKACIJA MEMORIJE ZA NOVI ELEMENT!\n");
