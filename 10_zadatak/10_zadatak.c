@@ -13,7 +13,7 @@ typedef struct _gradovi_stablo
     int broj_stanovnika;
     Pozicija_sgradovi lijevo;
     Pozicija_sgradovi desno;
-} S_gradovi; 
+} S_gradovi;
 
 /*DEKLARACIJA STRUKTURE VEZANE LISTE IMENA DRZAVA*/
 struct _drzave_lista;
@@ -354,7 +354,7 @@ int Pretraga_a(Pozicija_ldrzave head)
         printf("\nZa prekid pretrazivanja upisite \"exit\"\n");
         scanf(" %s", ime_drzave);
         Pronadi_Drzavu_VL(head, ime_drzave);
-    } while (strcmp(ime_drzave, "exit"));
+    } while (strcmp(ime_drzave, "exit") != 0);
 
     return EXIT_SUCCESS;
 }
@@ -621,7 +621,7 @@ int Pretraga_b(Pozicija_sdrzave root)
         printf("\nZa prekid pretrazivanja upisite \"exit\"\n");
         scanf(" %s", ime_drzave);
         Pronadi_Drzavu_S(root, ime_drzave);
-    } while (strcmp(ime_drzave, "exit"));
+    } while (strcmp(ime_drzave, "exit") != 0);
 
     return EXIT_SUCCESS;
 }
