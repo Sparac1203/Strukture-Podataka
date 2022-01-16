@@ -1,0 +1,4 @@
+Moscow 12655050
+Saint_Petersburg 5384342
+Novosibirsk 1620162
+Pyatigorsk 146267

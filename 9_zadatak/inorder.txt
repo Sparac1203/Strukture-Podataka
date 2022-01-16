@@ -1,0 +1,5 @@
+Binarno stablo prije sumiranja podstabala:
+76, 75, 59, 48, 38, 36, 29, 24, 21, 20, 
+
+Binarno stablo nakon sumiranja podstabala:
+256, 0, 123, 0, 218, 0, 397, 41, 20, 0, 

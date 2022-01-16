@@ -58,10 +58,13 @@ int main()
 {
     srand(time(NULL));
     int regulator = 0;
+
     Red head = {.broj = 0, .next = NULL};
     PozicijaRed red_head = &head;
+
     Pozicija p_stablo = NULL;
     Pozicija p_stablo_rand = NULL;
+    
     int Zadani_Niz[] = {2, 5, 7, 8, 11, 1, 4, 2, 3, 7};
     int *NoviNiz;
     NoviNiz = (int *)malloc(sizeof(Zadani_Niz));

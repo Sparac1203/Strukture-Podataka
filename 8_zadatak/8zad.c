@@ -6,7 +6,7 @@
 #define MAX 128
 #define MAX_L 1024
 
-/*DEKLARACIJA STRUKTURE DIREKTORIJA*/
+/*DEKLARACIJA STRUKTURE STABLA*/
 struct _stablo;
 typedef struct _stablo *Pozicija;
 typedef struct _stablo
@@ -32,12 +32,11 @@ int IspisiRazinu(Pozicija head, int razina);
 Pozicija IzbrisiElement(Pozicija Lokacija, int izbor);
 Pozicija PronadiMin(Pozicija Lokacija);
 Pozicija PronadiEl(Pozicija Lokacija, int broj);
-/*-------------------------------------------------MAIN FUNKCIJA-------------------------------------------------*/
 
+/*-------------------------------------------------MAIN FUNKCIJA-------------------------------------------------*/
 int main()
 {
-    stablo stablo_head = {.broj = 0, .desno = NULL, .lijevo = NULL};
-    Pozicija p_stablo = &stablo_head;
+    Pozicija p_stablo = NULL;
 
     char naredba[MAX] = {'\0'};
     int broj = 0;
@@ -46,7 +45,7 @@ int main()
     {
         IspisNaredbi();
         broj = UnosNaredbe(naredba);
-        //printf("%d main broj", broj);
+        printf("%d main broj", broj);
 
         OdabirOpcije(p_stablo, naredba, broj);
     } while (strcmp(naredba, "exit"));
@@ -84,7 +83,7 @@ int UnosNaredbe(char naredba[MAX])
         stdin_string[strlen(stdin_string) - 1] = '\0';
     }
     sscanf(stdin_string, "%s %d", naredba, &broj);
-    //printf(", %d sscanf broj", broj);
+    printf(", %d sscanf broj", broj);
 
     return broj;
 }
@@ -96,12 +95,13 @@ int OdabirOpcije(Pozicija head, char naredba[MAX], int broj)
 
     do
     {
-        //printf("\n1.naredba->%s, broj -> %d\n", naredba, broj);
+        printf("\n1.naredba->%s, broj -> %d\n", naredba, broj);
         regulator = 0;
         Lokacija = head;
         /*----------------------"insert ____"----------------------*/
         if (!strcmp(naredba, "insert"))
         {
+            printf("\tinorder %d", broj);
             Lokacija = UnosNovogEl(Lokacija, broj);
         }
         else if (!strcmp(naredba, "inorder"))
@@ -239,7 +239,7 @@ int PreorderPrint(Pozicija head)
     if (Lokacija)
     {
         printf("%d, ", Lokacija->broj);
-        InorderPrint(Lokacija->lijevo);
+        PreorderPrint(Lokacija->lijevo);
         InorderPrint(Lokacija->desno);
     }
 
@@ -253,8 +253,8 @@ int PostorderPrint(Pozicija head)
 
     if (Lokacija)
     {
-        InorderPrint(Lokacija->lijevo);
-        InorderPrint(Lokacija->desno);
+        PostorderPrint(Lokacija->lijevo);
+        PostorderPrint(Lokacija->desno);
         printf("%d, ", Lokacija->broj);
     }
 

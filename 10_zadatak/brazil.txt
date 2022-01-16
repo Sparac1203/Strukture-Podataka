@@ -1,0 +1,4 @@
+São_Paulo 12396372
+Rio_de_Janeiro	6775561
+Brasília 3094325
+Parnaíba 153863

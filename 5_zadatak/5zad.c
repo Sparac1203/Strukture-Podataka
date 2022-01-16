@@ -135,13 +135,9 @@ int Racunanje_Izraza(Pozicija head, char operacija)
         br1 = Pop(head);
         br2 = Pop(head);
         if (br1 == 0)
-        {
             printf("\nDijeljenje s 0 nije dozvoljeno!");
-        }
         else
-        {
             Push(head, br2 / br1);
-        }
         break;
     }
 

@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +36,7 @@ int Unos_U_Datoteku(Pozicija head);                                             
 /*-------------------------------------------------MAIN FUNKCIJA-------------------------------------------------*/
 int main()
 {
-    osoba head = {.next = NULL, .ime = {0}, .prezime = {0}, .GodinaRodenja = 0};
+    osoba head = {.next = NULL, .ime = {'\0'}, .prezime = {'\0'}, .GodinaRodenja = 0};
     Pozicija p = &head;
     Pozicija x = NULL;
     char odabir = '1'; //1 da zadovolji uvjet ulaska u while petlju
@@ -101,7 +102,7 @@ int main()
             scanf(" %s", Pom_Prezime);
             printf("\nGodina rodenja:\t");
             scanf("%d", &pom_god_rodenja);
-            Dodaj_Na_Kraj(p, Pom_Ime, Pom_Prezime, pom_god_rodenja);
+            Dodaj_Na_Kraj(head.next, Pom_Ime, Pom_Prezime, pom_god_rodenja);
             break;
         case 'D':
             printf("\nUnesite prezime koje zelite pronaci:\t");
@@ -284,7 +285,7 @@ int Cita_Listu_Iz_Datoteke(Pozicija prvi)
     FILE *fp = NULL;
     char dat[M] = {0};
     printf("\nUnesite naziv datoteke koju zelite procitati:\t");
-    scanf(" %s", dat);
+    scanf(" %s", &dat);
     fp = fopen(dat, "r");
     if (fp == NULL)
     {
@@ -375,11 +376,12 @@ int sortiraj(Pozicija head) //BUBBLE SORT
         }
         kraj = j;
     }
+    return EXIT_SUCCESS;
 }
 
 int Unos_U_Datoteku(Pozicija prvi)
 {
-    FILE *fp=NULL;
+    FILE *fp;
     char ime_datoteke[M];
     printf("\n\n\nKako zelite nazvati datoteku u koju upisujete listu?\n");
     scanf(" %s", ime_datoteke);

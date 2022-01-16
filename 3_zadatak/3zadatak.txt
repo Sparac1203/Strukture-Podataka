@@ -1,0 +1,11 @@
+
+ IME                       PREZIME                   GODINA RODENJA            
+
+
+ darijo                    dragonja                  56                       
+ iko                       ikic                      1324                     
+ liko                      ilak                      456                      
+ ivo                       ivic                      2020                     
+ mijo                      mijic                     252                      
+ Mika                      mikic                     1450                     
+ Pjero                     pjeric                    1988                     
