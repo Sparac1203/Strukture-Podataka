@@ -51,7 +51,7 @@ int Ispisi_Gradove_S(Pozicija_sgradovi root);
 /*  -pretrazivanje gradova po drzavama po broju stanovnika-  */
 int Pretraga(Pozicija_ldrzave *hash);
 /*  -kroz hash tablicu trazi unesenu drzavu u vezanoj listi-  */
-int Pronadi_Drzavu_VL(Pozicija_ldrzave *hash, char ime_drzave[MAX]);
+int Pronadi_Drzavu_VL(Pozicija_ldrzave head, char ime_drzave[MAX]);
 /*  -pronalazi sve gradove u zadanom randu broja stanovnika-  */
 int Pronadi_Gradove_S(Pozicija_ldrzave Drzava);
 /*  -ispisuje sve gradove s brojem stanovnika vecim od unesenog broja-  */
@@ -316,40 +316,36 @@ int Pretraga(Pozicija_ldrzave *hash)
         printf("\n\n\nKojoj od unesenih drzava zelite pretraziti gradove po broju stanovnika?\n");
         printf("\nZa prekid pretrazivanja upisite \"exit\"\n");
         scanf(" %s", ime_drzave);
-        Pronadi_Drzavu_VL(hash, ime_drzave);
+        if (strcmp(ime_drzave, "exit"))
+        {
+            int kljuc = Iracunaj_Kljuc_Hash(ime_drzave);
+            Pronadi_Drzavu_VL(hash[kljuc], ime_drzave);
+        }
     } while (strcmp(ime_drzave, "exit"));
 
     return EXIT_SUCCESS;
 }
 
-int Pronadi_Drzavu_VL(Pozicija_ldrzave *hash, char ime_drzave[MAX])
+int Pronadi_Drzavu_VL(Pozicija_ldrzave head, char ime_drzave[MAX])
 {
-    for(int i = 0; i < HASH_SIZE + 1; i++)
+    Pozicija_ldrzave Lokacija = NULL;
+    Lokacija = head->next;
+    while (Lokacija)
     {
-        if (i == 11)
+        if (!strcmp(ime_drzave, Lokacija->ime_drzave))
         {
-            printf("\n%s se ne nalazi u vezanoj listi!\n", ime_drzave);
+            Pronadi_Gradove_S(Lokacija);
+
             break;
         }
-        if(hash[i]->next)
+        else
         {
-            Pozicija_ldrzave Lokacija = NULL;
-            Lokacija = hash[i]->next;
-            while (Lokacija)
-            {
-                if (!strcmp(ime_drzave, Lokacija->ime_drzave))
-                {
-                    Pronadi_Gradove_S(Lokacija);
-
-                    break;
-                }
-                else
-                {
-                    Lokacija = Lokacija->next;
-                }
-            }
-
+            Lokacija = Lokacija->next;
         }
+    }
+    if (!Lokacija)
+    {
+        printf("\n%s se ne nalazi u vezanoj listi!\n", ime_drzave);
     }
 
     return EXIT_SUCCESS;
