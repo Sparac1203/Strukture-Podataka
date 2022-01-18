@@ -30,7 +30,7 @@ typedef struct _drzave_lista
 /*------------------------------------------DEKLARACIJA OTALIH FUNKCIJA------------------------------------------*/
 /*  -za svaki element hash tablice radi poseban head-  */
 Pozicija_ldrzave Hash_Drzave_Head(void);
-/*  --  */
+/*  -Ucitava drzave i sprema ih u hash tablicu ovisno o kljucu-  */
 int Ucitaj_Drzave(Pozicija_ldrzave *hash);
 /*  -alocira memoriju za novi element strukture VL_drzave-  */
 Pozicija_ldrzave Nova_Drzava_VL(void);
