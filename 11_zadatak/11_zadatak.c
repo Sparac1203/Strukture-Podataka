@@ -44,6 +44,18 @@ int Ucitaj_Gradove_S(Pozicija_ldrzave Drzava);
 Pozicija_sgradovi Novi_Grad_S(void);
 /*  -soritrani unos gradova u stablo-  */
 Pozicija_sgradovi Sortirani_Unos_GradoviS(Pozicija_sgradovi Lokacija, Pozicija_sgradovi Novi_Grad);
+/*  -ispisuje vezanu listu drzava-  */
+int Ispisi_Drzave_VL(Pozicija_ldrzave head);
+/*  -u inorder poretku ispisuje gradove pojedine drzave-  */
+int Ispisi_Gradove_S(Pozicija_sgradovi root);
+/*  -pretrazivanje gradova po drzavama po broju stanovnika-  */
+int Pretraga(Pozicija_ldrzave *hash);
+/*  -kroz hash tablicu trazi unesenu drzavu u vezanoj listi-  */
+int Pronadi_Drzavu_VL(Pozicija_ldrzave *hash, char ime_drzave[MAX]);
+/*  -pronalazi sve gradove u zadanom randu broja stanovnika-  */
+int Pronadi_Gradove_S(Pozicija_ldrzave Drzava);
+/*  -ispisuje sve gradove s brojem stanovnika vecim od unesenog broja-  */
+int Ispis_Gradova_S_min(Pozicija_sgradovi _Lokacija, int min_broj_stan);
 
 /*-------------------------------------------------MAIN FUNKCIJA-------------------------------------------------*/
 int main()
@@ -56,6 +68,7 @@ int main()
     }
 
     Ucitaj_Drzave(hash);
+    /*unos stabala gradova za svaku drzavu*/
     for (int i = 0; i < HASH_SIZE; i++)
     {
         Pozicija_ldrzave drzava = NULL;
@@ -66,6 +79,19 @@ int main()
             drzava = drzava->next;
         }
     }
+
+    /*ispis drzava i gradova*/
+    for (int i = 0; i < HASH_SIZE; i++)
+    {
+        if (hash[i]->next)
+        {
+            printf("\n\n-----------------------------------------------------------");
+            printf("\n\nKljuc = %d\n", i);
+            Ispisi_Drzave_VL(hash[i]);
+        }
+    }
+    /*Omogucuje ispis svih gradova neke drzave sa odabranim minimalnim brojem stanovnika*/
+    Pretraga(hash);
 
     return EXIT_SUCCESS;
 }
@@ -136,7 +162,6 @@ int Iracunaj_Kljuc_Hash(char *drzava)
         kljuc += (int)drzava[i];
     }
     kljuc = kljuc % 11;
-    printf("\n%d", kljuc);
 
     return kljuc;
 }
@@ -250,4 +275,117 @@ Pozicija_sgradovi Sortirani_Unos_GradoviS(Pozicija_sgradovi Lokacija, Pozicija_s
             return Lokacija;
         }
     }
+}
+
+int Ispisi_Drzave_VL(Pozicija_ldrzave head)
+{
+    Pozicija_ldrzave Lokacija = NULL;
+    Lokacija = head->next;
+    while (Lokacija)
+    {
+        printf("\n%s:", Lokacija->ime_drzave);
+        Ispisi_Gradove_S(Lokacija->root);
+        Lokacija = Lokacija->next;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int Ispisi_Gradove_S(Pozicija_sgradovi root)
+{
+    Pozicija_sgradovi Lokacija = NULL;
+    Lokacija = root;
+
+    if (Lokacija)
+    {
+        Ispisi_Gradove_S(Lokacija->lijevo);
+        printf("\n\t%s -> broj stanovnika: %d", Lokacija->ime_grada, Lokacija->broj_stanovnika);
+        Ispisi_Gradove_S(Lokacija->desno);
+        printf("\n");
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int Pretraga(Pozicija_ldrzave *hash)
+{
+    char ime_drzave[MAX] = {'\0'};
+    do
+    {
+        printf("\n-----------------------------------------------------------");
+        printf("\n\n\nKojoj od unesenih drzava zelite pretraziti gradove po broju stanovnika?\n");
+        printf("\nZa prekid pretrazivanja upisite \"exit\"\n");
+        scanf(" %s", ime_drzave);
+        Pronadi_Drzavu_VL(hash, ime_drzave);
+    } while (strcmp(ime_drzave, "exit"));
+
+    return EXIT_SUCCESS;
+}
+
+int Pronadi_Drzavu_VL(Pozicija_ldrzave *hash, char ime_drzave[MAX])
+{
+    for(int i = 0; i < HASH_SIZE + 1; i++)
+    {
+        if (i == 11)
+        {
+            printf("\n%s se ne nalazi u vezanoj listi!\n", ime_drzave);
+            break;
+        }
+        if(hash[i]->next)
+        {
+            Pozicija_ldrzave Lokacija = NULL;
+            Lokacija = hash[i]->next;
+            while (Lokacija)
+            {
+                if (!strcmp(ime_drzave, Lokacija->ime_drzave))
+                {
+                    Pronadi_Gradove_S(Lokacija);
+
+                    break;
+                }
+                else
+                {
+                    Lokacija = Lokacija->next;
+                }
+            }
+
+        }
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int Pronadi_Gradove_S(Pozicija_ldrzave Drzava)
+{
+    int min_broj_stanovnika = 0;
+    Pozicija_sgradovi Lokacija = NULL;
+    Lokacija = Drzava->root;
+    printf("\n%s", Drzava->ime_drzave);
+    printf("\nUnesite minimalan broj stanovnika gradova u odabranoj drzavi:\t");
+    scanf("%d", &min_broj_stanovnika);
+    Ispis_Gradova_S_min(Lokacija, min_broj_stanovnika);
+
+    return EXIT_SUCCESS;
+}
+
+int Ispis_Gradova_S_min(Pozicija_sgradovi _Lokacija, int min_broj_stan)
+{
+    Pozicija_sgradovi Lokacija = NULL;
+    Lokacija = _Lokacija;
+
+    if (Lokacija)
+    {
+        if (Lokacija->broj_stanovnika <= min_broj_stan)
+        {
+            Ispis_Gradova_S_min(Lokacija->desno, min_broj_stan);
+        }
+        else
+        {
+            Ispis_Gradova_S_min(Lokacija->lijevo, min_broj_stan);
+            printf("\n%s -> broj stanovnika: %d", Lokacija->ime_grada, Lokacija->broj_stanovnika);
+            Ispis_Gradova_S_min(Lokacija->desno, min_broj_stan);
+        }
+    }
+
+    return EXIT_SUCCESS;
 }
